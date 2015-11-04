@@ -24,16 +24,16 @@ Mint.utils = (function() {
      * If min is not specified it set to 0. If max is not specified it set to Number.MAX_VALUE.
      */
     function getRandomInt(min, max) { 
-        if(min && !Number.isInteger(min)) {
+        if(min && !isInteger(min)) {
             throw new Error("If the first parameter specified it should be int.");
         }
 
-        if(max && !Number.isInteger(max)) {
+        if(max && !isInteger(max)) {
             throw new Error("If the second parameter specified it should be int.");
         }
 
-        min = Number.isInteger(min) ? min : 0;
-        max = Number.isInteger(max) ? max : Number.MAX_VALUE;
+        min = isInteger(min) ? min : 0;
+        max = isInteger(max) ? max : Number.MAX_VALUE;
 
         if(min > max){
             throw new Error("First parameter should be less or equal then the second one.");
@@ -52,6 +52,10 @@ Mint.utils = (function() {
 
     function isString(obj) {
         return Object.prototype.toString.call(obj) === "[object String]";
+    }
+
+    function isInteger(obj) {
+        return typeof obj === "number" && isFinite(obj) && Math.floor(obj) === obj;
     }
 
     /**
@@ -118,6 +122,15 @@ Mint.utils = (function() {
         }
     }
 
+
+    function clone(obj) {
+        if(obj === undefined) {
+            return undefined;
+        }
+
+        return JSON.parse(JSON.stringify(obj));
+    }
+
     function generateSymbolsQuartet() {
         return Math.floor((1 + Math.random()) * 0x10000)
                  .toString(16)
@@ -130,9 +143,11 @@ Mint.utils = (function() {
         isArray: isArray,
         isFunction: isFunction,
         isString: isString,
+        isInteger: isInteger,
         arrayFirst: arrayFirst,
         arrayRemoveItem: arrayRemoveItem,
-        dictionaryForEach: dictionaryForEach
+        dictionaryForEach: dictionaryForEach,
+        clone: clone
     }
 })();
 

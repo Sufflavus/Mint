@@ -20,9 +20,11 @@ JavaScript helpful functions
 1. Mint.utils.isArray(obj)
 1. Mint.utils.isFunction(obj)
 1. Mint.utils.isString(obj)
+1. Mint.utils.isInteger(obj)
 1. Mint.utils.arrayFirst(array, predicate)
 1. Mint.utils.arrayRemoveItem(array, itemToRemove)
 1. Mint.utils.dictionaryForEach(dictionary, callback)
+1. Mint.utils.clone(obj)
 
 ## Mint.utils functions 
 ### 1. Mint.utils.createGuid()
@@ -140,8 +142,36 @@ Mint.utils.isString(null);           // false
 Mint.utils.isString([1, 2, 3]);      // false
 ```
 
+### 6. Mint.utils.isInteger()
+> The **isInteger()** method determines whether the passed value is an integer.
 
-### 6. Mint.utils.arrayFirst()
+_For more information visit [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger)_
+
+#### Syntax
+```js
+var isInteger = Mint.utils.isInteger(12);
+```
+
+#### Parameters
+* **value** - The value to be tested for being an integer.
+
+#### Return Value
+**true** if the tested object is integer; otherwise, **false**.
+
+#### Examples
+
+```js
+Mint.utils.isInteger(0.1);      // false
+Mint.utils.isInteger(1);        // true
+Mint.utils.isInteger(Math.PI);  // false
+Mint.utils.isInteger(-100000);  // true
+Mint.utils.isInteger(0);        // true
+Mint.utils.isInteger("10");     // false
+Mint.utils.isInteger(null);     // false
+```
+
+
+### 7. Mint.utils.arrayFirst()
 > The **arrayFirst()** method returns the first item of an array that is matched the predicate function.
 
 #### Syntax
@@ -173,7 +203,7 @@ first = Mint.utils.arrayFirst(array, function (item){
 
 ```
 
-### 7. Mint.utils.arrayRemoveItem()
+### 8. Mint.utils.arrayRemoveItem()
 > The **arrayRemoveItem()** method removes first accurance of item from an array.
 > The arrayRemoveItem() method removes item from array that is passed as first parameter.
 
@@ -193,7 +223,7 @@ var array = [1, 3, 8];
 Mint.utils.arrayRemoveItem(array, 3); // array == [1, 8]
 ```
 
-### 8. Mint.utils.dictionaryForEach()
+### 9. Mint.utils.dictionaryForEach()
 > The **dictionaryForEach()** method executes a provided function once per dictionary element.
 > The dictionaryForEach() method executes only for own properties of an object.
 
@@ -217,6 +247,38 @@ Mint.utils.dictionaryForEach(dict, logDictionaryElements);
 // logs:
 // key = a; value = 1
 // key = b; value = 2
+
+### 10. Mint.utils.clone()
+> The **clone()** method returns a clone of the object (only data fields, not function).
+
+#### Syntax
+```js
+var obj = {a: 1};
+var clone = Mint.utils.clone(obj);
+```
+
+#### Return Value
+**object** that is clone of the passed object.
+
+#### Examples
+
+```js
+var value = { a: { b: 1 } };
+var clone = Mint.utils.clone(); // { a: { b: 1 } }
+
+value = { 
+            a: { 
+                b: 1, 
+                foo: function(){}
+            },
+            c: "lorem"
+        };
+
+clone = Mint.utils.clone();     // { a: { b: 1 }, c: "lorem" }
+
+value = "Lorem";
+clone = Mint.utils.clone();     // "Lorem"
+```
 
 
 ```

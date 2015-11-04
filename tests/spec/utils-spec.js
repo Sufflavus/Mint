@@ -29,6 +29,11 @@ describe("utils", function() {
         expect(actual).toBe(true);
     }); 
 
+    it("has function isInteger", function() {
+        var actual = Mint.utils.isInteger instanceof Function;
+        expect(actual).toBe(true);
+    });     
+
     it("has function arrayFirst", function() {
         var actual = Mint.utils.arrayFirst instanceof Function;
         expect(actual).toBe(true);
@@ -41,6 +46,11 @@ describe("utils", function() {
 
     it("has function dictionaryForEach", function() {
         var actual = Mint.utils.dictionaryForEach instanceof Function;
+        expect(actual).toBe(true);
+    }); 
+
+    it("has function clone", function() {
+        var actual = Mint.utils.clone instanceof Function;
         expect(actual).toBe(true);
     }); 
 });
@@ -71,7 +81,7 @@ describe("utils.getRandomInt", function() {
     it("returns positive int when called without parameters", function() {
         var actual = Mint.utils.getRandomInt();
 
-        expect(Number.isInteger(actual)).toBe(true);
+        expect(Mint.utils.isInteger(actual)).toBe(true);
         expect(actual).not.toBeLessThan(0);
     });
 
@@ -79,7 +89,7 @@ describe("utils.getRandomInt", function() {
         var min = 5;
         var actual = Mint.utils.getRandomInt(min);
 
-        expect(Number.isInteger(actual)).toBe(true);
+        expect(Mint.utils.isInteger(actual)).toBe(true);
         expect(actual).not.toBeLessThan(min);
     }); 
 
@@ -89,7 +99,7 @@ describe("utils.getRandomInt", function() {
 
         var actual = Mint.utils.getRandomInt(min, max);
 
-        expect(Number.isInteger(actual)).toBe(true);
+        expect(Mint.utils.isInteger(actual)).toBe(true);
         expect(actual).not.toBeLessThan(min);
         expect(actual).not.toBeGreaterThan(max);
     });
@@ -100,7 +110,7 @@ describe("utils.getRandomInt", function() {
 
         var actual = Mint.utils.getRandomInt(min, max);
 
-        expect(Number.isInteger(actual)).toBe(true);
+        expect(Mint.utils.isInteger(actual)).toBe(true);
         expect(actual).not.toBeLessThan(min);
         expect(actual).not.toBeGreaterThan(max);
     }); 
@@ -111,7 +121,7 @@ describe("utils.getRandomInt", function() {
 
         var actual = Mint.utils.getRandomInt(min, max);
 
-        expect(Number.isInteger(actual)).toBe(true);
+        expect(Mint.utils.isInteger(actual)).toBe(true);
         expect(actual).toEqual(min);
     }); 
 
@@ -603,4 +613,185 @@ describe("utils.isString", function() {
         var actual = Mint.utils.isString(NaN);
         expect(actual).toBe(false);
     }); 
+});
+
+describe("utils.clone", function() {
+    it("returns correct result for empty object", function() {      
+        var testedObject = {};
+
+        var actual = Mint.utils.clone(testedObject);  
+
+        var numberOfProperties = Object.getOwnPropertyNames(actual).length;
+        expect(numberOfProperties).toEqual(0);
+    });
+
+    it("returns correct result for one-level object", function() {      
+        var testedObject = { a: 1, b: "lorem", "t": 5};
+        var testedObjectProperties = Object.getOwnPropertyNames(testedObject);
+
+        var actual = Mint.utils.clone(testedObject);  
+
+        var actualObjectProperties = Object.getOwnPropertyNames(actual);
+        expect(actualObjectProperties.length).toEqual(testedObjectProperties.length);
+
+        testedObjectProperties.forEach(function(prop){
+            expect(actualObjectProperties.indexOf(prop)).toBeGreaterThan(-1);
+            expect(actual[prop]).toEqual(testedObject[prop]);
+        });     
+    });
+
+    it("returns correct result for one-level object with function", function() {        
+        var testedObject = { a: 1, b: "lorem", "t": 5, foo: function(){}};
+        var testedObjectProperties = Object.getOwnPropertyNames(testedObject).filter(function(prop){ return prop!="foo"; });
+
+        var actual = Mint.utils.clone(testedObject);  
+        
+        var actualObjectProperties = Object.getOwnPropertyNames(actual);
+        expect(actualObjectProperties.length).toEqual(testedObjectProperties.length);
+
+        testedObjectProperties.forEach(function(prop){
+            expect(actualObjectProperties.indexOf(prop)).toBeGreaterThan(-1);
+            expect(actual[prop]).toEqual(testedObject[prop]);
+        });     
+
+        expect(!actual.foo).toBe(true);
+    });
+
+    it("returns correct result for one-level object with array", function() {       
+        var testedObject = { a: 1, b: "lorem", "t": 5, array: [1, 2]};
+        var testedObjectProperties = Object.getOwnPropertyNames(testedObject);
+
+        var actual = Mint.utils.clone(testedObject);  
+        
+        var actualObjectProperties = Object.getOwnPropertyNames(actual);
+        expect(actualObjectProperties.length).toEqual(testedObjectProperties.length);
+
+        testedObjectProperties.forEach(function(prop){
+            expect(actualObjectProperties.indexOf(prop)).toBeGreaterThan(-1);
+            expect(actual[prop]).toEqual(testedObject[prop]);
+        }); 
+    });
+
+    it("returns correct result for two-level object", function() {
+        var testedInnerObject = { a: { b: 1, "t": 5 } };
+        var testedObject = { a: testedInnerObject, c: "lorem" };            
+        var testedObjectProperties = Object.getOwnPropertyNames(testedObject);
+        var testedInnerObjectProperties = Object.getOwnPropertyNames(testedInnerObject);
+
+        var actual = Mint.utils.clone(testedObject);  
+
+        var actualObjectProperties = Object.getOwnPropertyNames(actual);
+        expect(actualObjectProperties.length).toEqual(testedObjectProperties.length);
+
+        testedObjectProperties.forEach(function(prop){
+            expect(actualObjectProperties.indexOf(prop)).toBeGreaterThan(-1);
+            expect(actual[prop]).toEqual(testedObject[prop]);
+        });     
+
+        var actualInnerObjectProperties = Object.getOwnPropertyNames(actual.a);
+        expect(actualInnerObjectProperties.length).toEqual(testedInnerObjectProperties.length);
+
+        testedInnerObjectProperties.forEach(function(prop){
+            expect(actualInnerObjectProperties.indexOf(prop)).toBeGreaterThan(-1);
+            expect(actual.a[prop]).toEqual(testedInnerObject[prop]);
+        });     
+    });
+
+    it("returns the same string for non-empty string", function() {     
+        var testedObject = "lorem";
+        var actual = Mint.utils.clone(testedObject);  
+        expect(actual).toEqual(testedObject);
+    });
+
+    it("returns the same string for empty string", function() {     
+        var testedObject = "";
+        var actual = Mint.utils.clone(testedObject);  
+        expect(actual).toEqual(testedObject);
+    });
+
+    it("returns the same int for int", function() {     
+        var testedObject = 1;
+        var actual = Mint.utils.clone(testedObject);  
+        expect(actual).toEqual(testedObject);
+    });
+
+    it("returns the same float for float", function() {     
+        var testedObject = 1.786;
+        var actual = Mint.utils.clone(testedObject);  
+        expect(actual).toEqual(testedObject);
+    });
+
+    it("returns the same array for array", function() {     
+        var testedObject = [1, 2, 3];
+        var actual = Mint.utils.clone(testedObject);  
+        expect(actual).toEqual(testedObject);
+    });
+
+    it("returns null for null", function() {
+        var testedObject = null;
+        var actual = Mint.utils.clone(testedObject);  
+        expect(actual).toBeNull();
+    });
+
+    it("returns undefined for undefined", function() {
+        var testedObject = undefined;
+        var actual = Mint.utils.clone(testedObject);  
+        expect(actual).toBeUndefined();
+    });
+});
+
+describe("utils.isInteger", function() {
+    it("returns true for integer", function() {     
+        var value = 5;              
+        var actual = Mint.utils.isInteger(value);   
+        expect(actual).toBe(true);      
+    }); 
+
+    it("returns true for 0", function() {               
+        var value = 0;              
+        var actual = Mint.utils.isInteger(value);   
+        expect(actual).toBe(true);      
+    }); 
+
+    it("returns true for negative integer", function() {    
+        var value = -100000;                
+        var actual = Mint.utils.isInteger(value);                       
+        expect(actual).toBe(true);      
+    }); 
+
+    it("returns false for string", function() {     
+        var value = "5";                
+        var actual = Mint.utils.isInteger(value);               
+        expect(actual).toBe(false);     
+    }); 
+        
+    it("returns false for float", function() {      
+        var value = 0.1;                
+        var actual = Mint.utils.isInteger(value);           
+        expect(actual).toBe(false);     
+    }); 
+    
+    it("returns false for Math.PI", function() {        
+        var value = Math.PI;                
+        var actual = Mint.utils.isInteger(value);                       
+        expect(actual).toBe(false);     
+    }); 
+
+    it("returns false for NaN", function() {        
+        var value = NaN;                
+        var actual = Mint.utils.isInteger(value);               
+        expect(actual).toBe(false);     
+    }); 
+
+    it("returns false for null", function() {       
+        var value = null;               
+        var actual = Mint.utils.isInteger(value);               
+        expect(actual).toBe(false);     
+    });
+
+    it("returns false for undefined", function() {      
+        var value = undefined;              
+        var actual = Mint.utils.isInteger(value);               
+        expect(actual).toBe(false);     
+    });
 });
