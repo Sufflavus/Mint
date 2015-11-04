@@ -50,6 +50,10 @@ Mint.utils = (function() {
         return Object.prototype.toString.call(obj) === "[object Function]";
     }
 
+    function isString(obj) {
+        return Object.prototype.toString.call(obj) === "[object String]";
+    }
+
     /**
      * Returns the first item of an array that matched the predicate function (has tests)
      * @param {Array} array 
@@ -125,6 +129,7 @@ Mint.utils = (function() {
         getRandomInt: getRandomInt,
         isArray: isArray,
         isFunction: isFunction,
+        isString: isString,
         arrayFirst: arrayFirst,
         arrayRemoveItem: arrayRemoveItem,
         dictionaryForEach: dictionaryForEach

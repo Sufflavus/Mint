@@ -19,6 +19,7 @@ JavaScript helpful functions
 1. Mint.utils.getRandomInt(min, max)
 1. Mint.utils.isArray(obj)
 1. Mint.utils.isFunction(obj)
+1. Mint.utils.isString(obj)
 1. Mint.utils.arrayFirst(array, predicate)
 1. Mint.utils.arrayRemoveItem(array, itemToRemove)
 1. Mint.utils.dictionaryForEach(dictionary, callback)
@@ -114,7 +115,33 @@ Mint.utils.isFunction(null);       // false
 Mint.utils.isFunction([1, 2, 3]);  // false
 ```
 
-### 5. Mint.utils.arrayFirst()
+### 5. Mint.utils.isString()
+> The **isString()** method determines whether the tested object is string.
+
+#### Syntax
+```js
+var testedObject = "lorem impus";
+var isString = Mint.utils.isString(testedObject);
+```
+
+#### Parameters
+* **obj** - (object) An object for check.
+
+#### Return Value
+**true** if the tested object is string; otherwise, **false**.
+
+#### Examples
+
+```js
+Mint.utils.isString("lorem impus");  // true
+Mint.utils.isString(12);             // false
+Mint.utils.isString(function(){ });  // false
+Mint.utils.isString(null);           // false
+Mint.utils.isString([1, 2, 3]);      // false
+```
+
+
+### 6. Mint.utils.arrayFirst()
 > The **arrayFirst()** method returns the first item of an array that is matched the predicate function.
 
 #### Syntax
@@ -146,7 +173,7 @@ first = Mint.utils.arrayFirst(array, function (item){
 
 ```
 
-### 4. Mint.utils.arrayRemoveItem()
+### 7. Mint.utils.arrayRemoveItem()
 > The **arrayRemoveItem()** method removes first accurance of item from an array.
 > The arrayRemoveItem() method removes item from array that is passed as first parameter.
 
@@ -166,7 +193,7 @@ var array = [1, 3, 8];
 Mint.utils.arrayRemoveItem(array, 3); // array == [1, 8]
 ```
 
-### 5. Mint.utils.dictionaryForEach()
+### 8. Mint.utils.dictionaryForEach()
 > The **dictionaryForEach()** method executes a provided function once per dictionary element.
 > The dictionaryForEach() method executes only for own properties of an object.
 
