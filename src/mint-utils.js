@@ -58,6 +58,10 @@ Mint.utils = (function() {
         return typeof obj === "number" && isFinite(obj) && Math.floor(obj) === obj;
     }
 
+    function isFloat(obj) {
+        return Number(obj) === obj && obj % 1 !== 0 || isInteger(obj);
+    }
+
     /**
      * Returns the first item of an array that matched the predicate function (has tests)
      * @param {Array} array 
@@ -144,6 +148,7 @@ Mint.utils = (function() {
         isFunction: isFunction,
         isString: isString,
         isInteger: isInteger,
+        isFloat: isFloat,
         arrayFirst: arrayFirst,
         arrayRemoveItem: arrayRemoveItem,
         dictionaryForEach: dictionaryForEach,

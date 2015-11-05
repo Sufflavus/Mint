@@ -21,6 +21,7 @@ JavaScript helpful functions
 1. Mint.utils.isFunction(obj)
 1. Mint.utils.isString(obj)
 1. Mint.utils.isInteger(obj)
+1. Mint.utils.isFloat(obj)
 1. Mint.utils.arrayFirst(array, predicate)
 1. Mint.utils.arrayRemoveItem(array, itemToRemove)
 1. Mint.utils.dictionaryForEach(dictionary, callback)
@@ -170,8 +171,35 @@ Mint.utils.isInteger("10");     // false
 Mint.utils.isInteger(null);     // false
 ```
 
+### 7. Mint.utils.isFloat()
+> The **isFloat()** method determines whether the passed value is an float.
 
-### 7. Mint.utils.arrayFirst()
+#### Syntax
+```js
+var isFloat = Mint.utils.isFloat(1.2);
+```
+
+#### Parameters
+* **value** - The value to be tested for being a float.
+
+#### Return Value
+**true** if the tested object is integer; otherwise, **false**.
+
+#### Examples
+
+```js
+Mint.utils.isFloat(0.1);      // true
+Mint.utils.isFloat(-10.1);    // true
+Mint.utils.isFloat(1);        // true
+Mint.utils.isFloat(Math.PI);  // true
+Mint.utils.isFloat(-100000);  // true
+Mint.utils.isFloat(NaN);      // false
+Mint.utils.isFloat(0);        // true
+Mint.utils.isFloat("10");     // false
+```
+
+
+### 8. Mint.utils.arrayFirst()
 > The **arrayFirst()** method returns the first item of an array that is matched the predicate function.
 
 #### Syntax
@@ -203,7 +231,7 @@ first = Mint.utils.arrayFirst(array, function (item){
 
 ```
 
-### 8. Mint.utils.arrayRemoveItem()
+### 9. Mint.utils.arrayRemoveItem()
 > The **arrayRemoveItem()** method removes first accurance of item from an array.
 > The arrayRemoveItem() method removes item from array that is passed as first parameter.
 
@@ -223,7 +251,7 @@ var array = [1, 3, 8];
 Mint.utils.arrayRemoveItem(array, 3); // array == [1, 8]
 ```
 
-### 9. Mint.utils.dictionaryForEach()
+### 10. Mint.utils.dictionaryForEach()
 > The **dictionaryForEach()** method executes a provided function once per dictionary element.
 > The dictionaryForEach() method executes only for own properties of an object.
 
@@ -248,7 +276,7 @@ Mint.utils.dictionaryForEach(dict, logDictionaryElements);
 // key = a; value = 1
 // key = b; value = 2
 
-### 10. Mint.utils.clone()
+### 11. Mint.utils.clone()
 > The **clone()** method returns a clone of the object (only data fields, not function).
 
 #### Syntax
