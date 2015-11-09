@@ -4,16 +4,6 @@ describe("utils", function() {
         expect(actual).toBe(true);
     }); 
 
-    it("has function createGuid", function() {
-        var actual = Mint.utils.createGuid instanceof Function;
-        expect(actual).toBe(true);
-    });
-
-    it("has function getRandomInt", function() {
-        var actual = Mint.utils.getRandomInt instanceof Function;
-        expect(actual).toBe(true);
-    }); 
-
     it("has function isArray", function() {
         var actual = Mint.utils.isArray instanceof Function;
         expect(actual).toBe(true);
@@ -57,103 +47,6 @@ describe("utils", function() {
     it("has function clone", function() {
         var actual = Mint.utils.clone instanceof Function;
         expect(actual).toBe(true);
-    }); 
-});
-
-describe("utils.createGuid", function() {
-    it("returns correct Guid", function() {
-        var actual = Mint.utils.createGuid();
-
-        var resultParts = actual.split('-');
-        expect(actual.length).toEqual(36);
-        expect(resultParts.length).toEqual(5);
-        expect(resultParts[0].length).toEqual(8);
-        expect(resultParts[1].length).toEqual(4);
-        expect(resultParts[2].length).toEqual(4);
-        expect(resultParts[3].length).toEqual(4);
-        expect(resultParts[4].length).toEqual(12);
-    });
-
-    it("returns new Guid each time", function() {
-        var guid1 = Mint.utils.createGuid();
-        var guid2 = Mint.utils.createGuid();
-        
-        expect(guid1).not.toEqual(guid2);
-    });
-});
-
-describe("utils.getRandomInt", function() {
-    it("returns positive int when called without parameters", function() {
-        var actual = Mint.utils.getRandomInt();
-
-        expect(Mint.utils.isInteger(actual)).toBe(true);
-        expect(actual).not.toBeLessThan(0);
-    });
-
-    it("returns int that greater than parameter when called with one parameter", function() {
-        var min = 5;
-        var actual = Mint.utils.getRandomInt(min);
-
-        expect(Mint.utils.isInteger(actual)).toBe(true);
-        expect(actual).not.toBeLessThan(min);
-    }); 
-
-    it("returns correct int when called with negative parameter", function() {
-        var min = -15;
-        var max = -5;
-
-        var actual = Mint.utils.getRandomInt(min, max);
-
-        expect(Mint.utils.isInteger(actual)).toBe(true);
-        expect(actual).not.toBeLessThan(min);
-        expect(actual).not.toBeGreaterThan(max);
-    });
-
-    it("returns correct int when called with 2 parameter", function() { 
-        var min = -15;
-        var max = 5;
-
-        var actual = Mint.utils.getRandomInt(min, max);
-
-        expect(Mint.utils.isInteger(actual)).toBe(true);
-        expect(actual).not.toBeLessThan(min);
-        expect(actual).not.toBeGreaterThan(max);
-    }); 
-
-    it("returns correct int when called with 2 equal parameter", function() {
-        var min = 5;
-        var max = 5;
-
-        var actual = Mint.utils.getRandomInt(min, max);
-
-        expect(Mint.utils.isInteger(actual)).toBe(true);
-        expect(actual).toEqual(min);
-    }); 
-
-    it("throws an exception when the first parameter greater then the second one", function() { 
-        var min = 15;
-        var max = -5;
-
-        expect(function() {
-            Mint.utils.getRandomInt(min, max);
-        }).toThrowError("First parameter should be less or equal then the second one.");
-    }); 
-
-    it("throws an exception the first parameter is not int", function() {
-        var min = "1";
-
-        expect(function() {
-            Mint.utils.getRandomInt(min);
-        }).toThrowError("If the first parameter specified it should be int.");
-    }); 
-
-    it("throws an exception the second parameter is not int", function() {
-        var min = 1;
-        var max = new Date();
-
-        expect(function() {
-            Mint.utils.getRandomInt(min, max);
-        }).toThrowError("If the second parameter specified it should be int.");
     }); 
 });
 
