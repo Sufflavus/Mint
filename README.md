@@ -3,11 +3,11 @@
 JavaScript helpful functions
 
 ## Setup & Dependencies
-1. mint-utils.js (does not have any dependencies)
+1. Add a file [mint-utils.js](https://github.com/Sufflavus/Mint/blob/master/src/mint-utils.js) (does not have any dependencies) on the page.
 
 ```html
 <head>
-    
+
 </head>
 <body>
 
@@ -15,13 +15,22 @@ JavaScript helpful functions
 </body>
 ```
 
+## Browsers support
+Functionality is tested in Chrome >= 46, Opera >= 33.0, Firefox >= 31.0, IE >= 11
+
+## Tests
+This library is delivered with Jasmine tests. To run tests open [SpecRunner.html](https://github.com/Sufflavus/Mint/blob/master/tests/SpecRunner.html) in your favorite browser.
+
+## List of functions
+
 1. Mint.utils.createGuid()
 1. Mint.utils.getRandomInt(min, max)
-1. Mint.utils.isArray(obj)
-1. Mint.utils.isFunction(obj)
-1. Mint.utils.isString(obj)
-1. Mint.utils.isInteger(obj)
-1. Mint.utils.isFloat(obj)
+1. Mint.utils.isArray(value)
+1. Mint.utils.isFunction(value)
+1. Mint.utils.isString(value)
+1. Mint.utils.isInteger(value)
+1. Mint.utils.isFloat(value)
+1. Mint.utils.trimString(value)
 1. Mint.utils.arrayFirst(array, predicate)
 1. Mint.utils.arrayRemoveItem(array, itemToRemove)
 1. Mint.utils.dictionaryForEach(dictionary, callback)
@@ -79,7 +88,7 @@ var isArray = Mint.utils.isArray([]);
 ```
 
 #### Parameters
-* **obj** - (object) An object for check.
+* **value** - (object) An object for check.
 
 #### Return Value
 **true** if the tested object is Array; otherwise, **false**.
@@ -87,10 +96,10 @@ var isArray = Mint.utils.isArray([]);
 #### Examples
 
 ```js
-Mint.utils.isArray([1,2,3]);      // true
-Mint.utils.isArray(new array());  // true
-Mint.utils.isArray("a");          // false
-Mint.utils.isArray(null);         // false
+Mint.utils.isArray([1, 2, 3]);      // true
+Mint.utils.isArray(new array());    // true
+Mint.utils.isArray("a");            // false
+Mint.utils.isArray(null);           // false
 ```
 
 ### 4. Mint.utils.isFunction()
@@ -103,7 +112,7 @@ var isFunction = Mint.utils.isFunction(testedObject);
 ```
 
 #### Parameters
-* **obj** - (object) An object for check.
+* **value** - (object) An object for check.
 
 #### Return Value
 **true** if the tested object is Function; otherwise, **false**.
@@ -128,7 +137,7 @@ var isString = Mint.utils.isString(testedObject);
 ```
 
 #### Parameters
-* **obj** - (object) An object for check.
+* **value** - (object) An object for check.
 
 #### Return Value
 **true** if the tested object is string; otherwise, **false**.
@@ -198,13 +207,38 @@ Mint.utils.isFloat(0);        // true
 Mint.utils.isFloat("10");     // false
 ```
 
+### 8. Mint.utils.trimString(value)
+> The **trimString()** method removes spaces from the beginning and the ending of the string but not from the middle of the string.
 
-### 8. Mint.utils.arrayFirst()
+#### Syntax
+```js
+var trimmedStr = Mint.utils.trimString("  Lorem impus ");
+```
+
+#### Parameters
+* **value** - string for trim.
+
+#### Return Value
+The string that remains after all spaces are removed from the start and end of the inner string.
+
+#### Examples
+
+```js
+Mint.utils.trimString("  Lorem impus ");                      // "Lorem impus"
+Mint.utils.trimString("Lorem impus");                         // "Lorem impus"
+Mint.utils.trimString("  Lorem   ipsum   dolor   sit amet");  // "Lorem   ipsum   dolor   sit amet"
+Mint.utils.trimString("   ");                                 // ""
+Mint.utils.trimString("");                                    // ""
+Mint.utils.trimString(null);                                  // error
+Mint.utils.trimString(12);                                    // error
+```
+
+### 9. Mint.utils.arrayFirst()
 > The **arrayFirst()** method returns the first item of an array that is matched the predicate function.
 
 #### Syntax
 ```js
-avar first = Mint.utils.arrayFirst(array, predicate);
+var first = Mint.utils.arrayFirst(array, predicate);
 ```
 
 #### Parameters
@@ -218,7 +252,7 @@ The first item of an array that is matched the predicate function; null if item 
 
 ```js
 
-var array = [1, 3, 8];          
+var array = [1, 3, 8];
 var first = Mint.utils.arrayFirst(array, function (item){
     return item > 2;
 });
@@ -231,7 +265,7 @@ first = Mint.utils.arrayFirst(array, function (item){
 
 ```
 
-### 9. Mint.utils.arrayRemoveItem()
+### 10. Mint.utils.arrayRemoveItem()
 > The **arrayRemoveItem()** method removes first accurance of item from an array.
 > The arrayRemoveItem() method removes item from array that is passed as first parameter.
 
@@ -247,11 +281,11 @@ Mint.utils.arrayRemoveItem(array, itemToRemove);
 #### Examples
 
 ```js
-var array = [1, 3, 8];      
+var array = [1, 3, 8];
 Mint.utils.arrayRemoveItem(array, 3); // array == [1, 8]
 ```
 
-### 10. Mint.utils.dictionaryForEach()
+### 11. Mint.utils.dictionaryForEach()
 > The **dictionaryForEach()** method executes a provided function once per dictionary element.
 > The dictionaryForEach() method executes only for own properties of an object.
 
@@ -276,7 +310,7 @@ Mint.utils.dictionaryForEach(dict, logDictionaryElements);
 // key = a; value = 1
 // key = b; value = 2
 
-### 11. Mint.utils.clone()
+### 12. Mint.utils.clone()
 > The **clone()** method returns a clone of the object (only data fields, not function).
 
 #### Syntax
@@ -308,8 +342,6 @@ value = "Lorem";
 clone = Mint.utils.clone();     // "Lorem"
 ```
 
-
-```
 
 ## LICENSE
 [The MIT License](https://github.com/Sufflavus/Mint/blob/master/LICENSE)

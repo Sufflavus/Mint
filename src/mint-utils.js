@@ -4,16 +4,16 @@
 
 var Mint = {};
 Mint.utils = (function() {
-    
+
     /**
      * Generates random Guid (has tests)
      * @return {String} random Guid. Example: "656fa0e4-11e9-4b89-8ae5-752cfe807b8f".
      * https://en.wikipedia.org/wiki/Globally_unique_identifier
-     */  
-    function createGuid() {     
+     */
+    function createGuid() {
         var s4 = generateSymbolsQuartet; 
         return s4() + s4() + "-" + s4() + "-" + s4() + "-" +
-             s4() + "-" + s4() + s4() + s4();      
+             s4() + "-" + s4() + s4() + s4();
     }
 
     /**
@@ -42,24 +42,32 @@ Mint.utils = (function() {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function isArray(obj) {
-        return Object.prototype.toString.call(obj) === "[object Array]";
+    function isArray(value) {
+        return Object.prototype.toString.call(value) === "[object Array]";
     }
 
-    function isFunction(obj) {
-        return Object.prototype.toString.call(obj) === "[object Function]";
+    function isFunction(value) {
+        return Object.prototype.toString.call(value) === "[object Function]";
     }
 
-    function isString(obj) {
-        return Object.prototype.toString.call(obj) === "[object String]";
+    function isString(value) {
+        return Object.prototype.toString.call(value) === "[object String]";
     }
 
-    function isInteger(obj) {
-        return typeof obj === "number" && isFinite(obj) && Math.floor(obj) === obj;
+    function isInteger(value) {
+        return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
     }
 
-    function isFloat(obj) {
-        return Number(obj) === obj && obj % 1 !== 0 || isInteger(obj);
+    function isFloat(value) {
+        return Number(value) === value && value % 1 !== 0 || isInteger(value);
+    }
+
+    function trimString(value) {
+        if(!isString(value)){
+            throw new Error("First parameter should be string.");
+        }
+
+        return value.replace(/^\s+|\s+$/g, '');
     }
 
     /**
@@ -99,8 +107,8 @@ Mint.utils = (function() {
         var index = array.indexOf(itemToRemove);
         if (index >= 0) {
             array.splice(index, 1);
-        }    
-    }   
+        }
+    }
 
     /**
      * Executes a provided function once per dictionary element. (has tests)
@@ -149,6 +157,7 @@ Mint.utils = (function() {
         isString: isString,
         isInteger: isInteger,
         isFloat: isFloat,
+        trimString: trimString,
         arrayFirst: arrayFirst,
         arrayRemoveItem: arrayRemoveItem,
         dictionaryForEach: dictionaryForEach,
