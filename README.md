@@ -2,7 +2,7 @@
 
 JavaScript helpful functions
 
-[![GitHub Wiki](https://img.shields.io/badge/project-wiki-ff69b4.svg)](https://github.com/Sufflavus/Mint/wiki)
+[![Code Climate](https://codeclimate.com/github/Sufflavus/Mint/badges/gpa.svg)](https://codeclimate.com/github/Sufflavus/Mint) [![GitHub Wiki](https://img.shields.io/badge/project-wiki-ff69b4.svg)](https://github.com/Sufflavus/Mint/wiki)
 
 ## Setup & Dependencies
 1. Add a file [mint-utils.js](https://github.com/Sufflavus/Mint/blob/master/src/mint-utils.js) (does not have any dependencies) on the page.
